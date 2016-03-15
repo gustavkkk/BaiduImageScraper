@@ -38,7 +38,6 @@ for w in keywords:
             ftxt = fimg + ".txt"
         print ftxt
         download_info = (url, fimg)
-        #print url  
         bi.download(download_info)
         
         f = codecs.open(ftxt,"w", "utf-8")
@@ -52,51 +51,4 @@ for w in keywords:
 #             count = 0 #Need to reset
 #             print "stop for %s"%w
 #             break
-    
-exit()
 
-
-
-
-mykey = "狗"
-
-
-
-keys = ("fromPageTitle","objURL","type","width","height")
-
-
-pn = 0
-cnt = 0
-
- 
-
-
-
-exit()
-#change to a specific foler
-if not os.path.exists(dest_folder):
-    os.makedirs(dest_folder)
-os.chdir(dest_folder)
- 
-
-
-pass
-
-
-
-
-
-
-
-#reading parameters
-if (len(sys.argv) < 5):
-    print('Usage: python crawler.py $key_word $dest_folder $num_of_images $num_of_threads')
-    exit()
-    
-
-dest_folder = sys.argv[2]
-num_image = eval(sys.argv[3])
-nthread = eval(sys.argv[4])
-
-
-print("Done.")
