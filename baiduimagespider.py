@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-import urllib2
 from baiduimage import BaiduImage
 import os
-import sys
 #from multiprocessing.dummy import Pool
 import codecs
 import properties
+import sys
 
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 words = properties.keywords
 output =  properties.output
@@ -15,7 +17,7 @@ keywords = words.split(",")
 
 bi = BaiduImage()
 
-count = 0
+
 
 pn = 0
 
@@ -29,21 +31,26 @@ for w in keywords:
     image_jdata = bi.get_jdata_with_key(w,pn) 
      
     #for url in image_urls:
+    count = 0
     for d in image_jdata:
         url = d["objURL"]
         fimg = os.path.basename(url)
-        try:
-            ftxt = fimg[0:fimg.index(".")] + ".txt"
-        except:
-            ftxt = fimg + ".txt"
-        print ftxt
-        download_info = (url, fimg)
+        plainfimg = fimg.encode("utf-8")
+        fn, ext =  os.path.splitext(plainfimg)
+        plainfimg = "%d%s"%(count+1,ext)
+        #print plainfimg
+        
+        ftxt = "%d.txt"%(count+1)
+        #print ftxt
+        download_info = (url, plainfimg)
         bi.download(download_info)
-        
         f = codecs.open(ftxt,"w", "utf-8")
+        f.write(w)
+        f.write("\r\n")
         f.write(d["fromPageTitle"])
+        f.write("\r\n")
+        f.write(d["objURL"])
         f.close()
-        
         count += 1
         print "++++count:%d"%count
         want_stop = False
